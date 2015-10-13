@@ -8,8 +8,8 @@
 
 response_for(Phrase) ->
   case {re:run(Phrase, ?QUESTION, [ucp]), re:run(Phrase, ?NOTSHOUTING, [ucp]), re:run(Phrase, ?SHOUTING, [ucp]), re:run(Phrase, ?SILENCE, [ucp]) } of
-    {_, nomatch, {_, _}, nomatch} -> "Whoa, chill out!";
-    {{_, _}, _, _, nomatch} -> "Sure.";
-    {nomatch, nomatch, nomatch, {_, _}} -> "Fine. Be that way!";
+    {_, nomatch, {match, _}, nomatch} -> "Whoa, chill out!";
+    {{match, _}, _, _, nomatch} -> "Sure.";
+    {nomatch, nomatch, nomatch, {match, _}} -> "Fine. Be that way!";
     _ -> "Whatever."
   end.
