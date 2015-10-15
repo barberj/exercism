@@ -1,16 +1,16 @@
 class Squares
-  attr_reader :natural_numbers
+  attr_reader :count
 
   def initialize(count)
-    @natural_numbers = 1.upto(count).to_a
+    @count = count
   end
 
   def square_of_sums
-    @square_of_sums ||= natural_numbers.inject(0, &:+) ** 2
+    @square_of_sums ||= 1.upto(count).inject(:+) ** 2
   end
 
   def sum_of_squares
-    @sum_of_squares ||= natural_numbers.inject do |result, number|
+    @sum_of_squares ||= 1.upto(count).inject do |result, number|
       result + (number ** 2)
     end
   end
