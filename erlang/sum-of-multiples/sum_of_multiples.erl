@@ -6,11 +6,10 @@ sumOfMultiplesDefault(N) -> sumOfMultiples([3,5], N).
 sumOfMultiples(_, 0) -> 0;
 sumOfMultiples(Multiples, N) ->
   NaturalNumber = N - 1,
-  IsFactor = fun(X) -> if X =:= 0 -> true; true -> false end end,
-  MultipleIsFactor = lists:any(IsFactor, [NaturalNumber rem Multiple || Multiple <- Multiples]),
+  MultipleIsFactor = lists:any(fun(Multiple) -> NaturalNumber rem Multiple == 0 end, Multiples),
   if
     MultipleIsFactor =:= true ->
       NaturalNumber + sumOfMultiples(Multiples, NaturalNumber);
-    true       ->
+    true                      ->
       0 + sumOfMultiples(Multiples, NaturalNumber)
   end.
