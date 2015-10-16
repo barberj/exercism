@@ -12,10 +12,10 @@ sumOfMultiplesDefault(N) -> sumOfMultiplesDefault(N, N-1).
 
 sumOfMultiples(_, 0) -> 0;
 sumOfMultiples(Multiples, N) ->
-  Big = fun(X) -> if X =:= 0 -> true; true -> false end end,
-  J = lists:any(Big, [N rem Multiple || Multiple <- Multiples]),
+  IsFactor = fun(X) -> if X =:= 0 -> true; true -> false end end,
+  MultipleIsFactor = lists:any(IsFactor, [N rem Multiple || Multiple <- Multiples]),
   if
-    J =:= true ->
+    MultipleIsFactor =:= true ->
       N + sumOfMultiples(Multiples, N-1);
     true       ->
       0 + sumOfMultiples(Multiples, N-1)
