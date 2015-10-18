@@ -1,19 +1,13 @@
 -module(space_age).
 -export([ageOn/2]).
 
-ageOn(Seconds) -> round(Seconds * 100) / 100.
-
 -spec(ageOn(atom(), integer()) -> float()).
-ageOn(Planet, Seconds)  ->
-  Normalized = case Planet of
-    mercury -> Seconds / 0.2408467;
-    venus   -> Seconds / 0.61519726;
-    mars    -> Seconds / 1.8808158;
-    jupiter -> Seconds / 11.862615;
-    saturn  -> Seconds / 29.447498;
-    uranus  -> Seconds / 84.016846;
-    neptune -> Seconds / 164.79132;
-    _       -> Seconds
-  end,
-  EarthSeconds = Normalized / 31557600,
-  ageOn(EarthSeconds).
+ageOn(earth,   Seconds) -> ageOn(1,          Seconds);
+ageOn(mercury, Seconds) -> ageOn(0.2408467,  Seconds);
+ageOn(venus,   Seconds) -> ageOn(0.61519726, Seconds);
+ageOn(mars,    Seconds) -> ageOn(1.8808158,  Seconds);
+ageOn(jupiter, Seconds) -> ageOn(11.862615,  Seconds);
+ageOn(saturn,  Seconds) -> ageOn(29.447498,  Seconds);
+ageOn(uranus,  Seconds) -> ageOn(84.016846,  Seconds);
+ageOn(neptune, Seconds) -> ageOn(164.79132,  Seconds);
+ageOn(Factor,  Seconds) -> Seconds / 31557600 / Factor.
