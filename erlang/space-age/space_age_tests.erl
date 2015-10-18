@@ -13,7 +13,7 @@ age_in_mercury_years_test() ->
 age_in_venus_years_test() ->
   Seconds = 189839836,
   equalFloat(space_age:ageOn(earth, Seconds), 6.02),
-  equalFloat(space_age:ageOn(venus, Seconds), 9.79).
+  equalFloat(space_age:ageOn(venus, Seconds), 9.78).
 
 age_in_mars_years_test() ->
   Seconds = 2329871239,
