@@ -2,7 +2,7 @@
 -export([find/2]).
 
 is_anagram(W,W) -> false;
-is_anagram(W,C) -> lists:sum(W) == lists:sum(C).
+is_anagram(W,C) -> lists:sort(W) == lists:sort(C).
 
 find(_,[],Acc)          -> lists:reverse(Acc);
 find(Word,[Word|T],Acc) -> find(Word,T,Acc);
