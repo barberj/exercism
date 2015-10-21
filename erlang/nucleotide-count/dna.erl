@@ -1,7 +1,6 @@
 -module(dna).
 -export([count/2, nucleotide_counts/1]).
 
-
 count([], _Nucleotide, Acc)   -> Acc;
 count([$A|T], "A", Acc)       -> count(T, "A", Acc + 1);
 count([$T|T], "T", Acc)       -> count(T, "T", Acc + 1);
@@ -16,12 +15,13 @@ count(Dna, Nucleotide) when
   Nucleotide == "C";
   Nucleotide == "G" ->
     count(Dna, Nucleotide, 0);
-count(_,_)            -> error("Invalid nucleotide").
-
-nucleotide_counts(_Dna, [], Acc) -> Acc;
-nucleotide_counts(Dna, [Nucleotide|T], Acc) ->
-  nucleotide_counts(Dna, T, Acc ++ [{Nucleotide, count(Dna, Nucleotide)}]).
+count(_,_)          -> error("Invalid nucleotide").
 
 -spec(nucleotide_counts(string()) -> list(tuple())).
-nucleotide_counts([]) -> [{"A", 0}, {"T", 0}, {"C", 0}, {"G", 0}];
-nucleotide_counts(Dna) -> nucleotide_counts(Dna, ["A","T","C","G"], []).
+nucleotide_counts([])  -> [{"A", 0}, {"T", 0}, {"C", 0}, {"G", 0}];
+nucleotide_counts(Dna) -> [
+  {"A", count(Dna, "A")},
+  {"T", count(Dna, "T")},
+  {"C", count(Dna, "C")},
+  {"G", count(Dna, "G")}
+].
