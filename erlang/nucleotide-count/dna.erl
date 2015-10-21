@@ -18,9 +18,9 @@ count(Dna, Nucleotide) when
     count(Dna, Nucleotide, 0);
 count(_,_)            -> error("Invalid nucleotide").
 
-nucleotide_counts(_Dna, [], Acc) -> lists:reverse(Acc);
+nucleotide_counts(_Dna, [], Acc) -> Acc;
 nucleotide_counts(Dna, [Nucleotide|T], Acc) ->
-  nucleotide_counts(Dna, T, [{Nucleotide, count(Dna, Nucleotide)}|Acc]).
+  nucleotide_counts(Dna, T, Acc ++ [{Nucleotide, count(Dna, Nucleotide)}]).
 
 -spec(nucleotide_counts(string()) -> list(tuple())).
 nucleotide_counts([]) -> [{"A", 0}, {"T", 0}, {"C", 0}, {"G", 0}];
