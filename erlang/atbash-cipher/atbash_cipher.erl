@@ -29,7 +29,10 @@ e_cipher(Y) when Y == $y; Y == $Y -> "b";
 e_cipher(Z) when Z == $z; Z == $Z -> "a";
 e_cipher(_) -> "".
 
-encode([], Acc) -> Acc;
-encode([C|T], Acc) ->  encode(T, Acc ++ e_cipher(C)).
-encode(Str) -> encode(Str, []).
+encode([], Acc, _)         -> Acc;
+encode(Str, Acc, 5)        -> encode(Str, Acc ++ " ", 0);
+encode([32|T], Acc, Count) -> encode(T, Acc, Count);
+encode([C|T], Acc, Count)  -> encode(T, Acc ++ e_cipher(C), Count + 1).
+
+encode(Str) -> encode(Str, [], 0).
 decode(Str) -> Str.
