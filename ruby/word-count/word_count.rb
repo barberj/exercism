@@ -7,18 +7,13 @@ class Phrase
   end
 
   def words
-    @words ||= phrase.split(%r{[,\s*]}).map do |part|
-      normed = (part[/\w+/] || "").downcase
-      normed.empty? ? nil : normed
-    end.compact
+    @words ||= phrase.scan(%r{[a-zA-Z]+'{0,1}[a-zA-Z]+|[0-9]+}).map(&:downcase)
   end
 
   def reduce_words
     @reduced ||= words.reduce({}) do |count, word|
-      if !word.empty?
-        count[word] ||= 0
-        count[word] += 1
-      end
+      count[word] ||= 0
+      count[word] += 1
       count
     end
   end
