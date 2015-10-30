@@ -27,12 +27,18 @@ e_cipher(W) when W == $w; W == $W -> "d";
 e_cipher(X) when X == $x; X == $X -> "c";
 e_cipher(Y) when Y == $y; Y == $Y -> "b";
 e_cipher(Z) when Z == $z; Z == $Z -> "a";
+e_cipher(" ") -> "";
+e_cipher(Num) when Num >= $0, Num =< $9 -> [Num];
 e_cipher(_) -> "".
 
 encode([], Acc, _)         -> Acc;
 encode(Str, Acc, 5)        -> encode(Str, Acc ++ " ", 0);
 encode([32|T], Acc, Count) -> encode(T, Acc, Count);
-encode([C|T], Acc, Count)  -> encode(T, Acc ++ e_cipher(C), Count + 1).
-
+encode([C|T], Acc, Count)  ->
+  Encoded = e_cipher(C),
+  if
+    Encoded == "" -> encode(T, Acc, Count);
+    true          -> encode(T, Acc ++ e_cipher(C), Count + 1)
+  end.
 encode(Str) -> encode(Str, [], 0).
 decode(Str) -> Str.
