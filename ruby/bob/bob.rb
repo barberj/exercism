@@ -15,7 +15,7 @@ class Bob
   end
 
   def silence?(text)
-    text.gsub(' ','').empty?
+    text.gsub(/\s/,'').empty?
   end
 
   def question?(text)
