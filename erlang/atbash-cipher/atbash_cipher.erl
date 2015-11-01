@@ -32,13 +32,13 @@ e_cipher(Num) when Num >= $0, Num =< $9 -> [Num];
 e_cipher(_) -> "".
 
 encode([], Acc, _)         -> Acc;
-encode(Str, Acc, 5)        -> encode(Str, Acc ++ " ", 0);
 encode([32|T], Acc, Count) -> encode(T, Acc, Count);
 encode([C|T], Acc, Count)  ->
   Encoded = e_cipher(C),
   if
     Encoded == "" -> encode(T, Acc, Count);
-    true          -> encode(T, Acc ++ e_cipher(C), Count + 1)
+    Count == 5    -> encode(T, Acc ++ " " ++ Encoded, 1);
+    true          -> encode(T, Acc ++ Encoded, Count + 1)
   end.
 encode(Str) -> encode(Str, [], 0).
 decode(Str) -> Str.
