@@ -11,7 +11,7 @@ class Bob
   private
 
   def yelling?(text)
-    text.upcase == text
+    text.downcase != text and text.upcase == text
   end
 
   def silence?(text)
