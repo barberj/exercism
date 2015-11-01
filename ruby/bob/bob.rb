@@ -4,7 +4,7 @@ class Bob
   def hey(text)
     return 'Fine. Be that way!' if silence?(text)
     return 'Whoa, chill out!' if yelling?(text)
-    'Sure.'
+    return 'Sure.' if question?(text)
     'Whatever.'
   end
 
@@ -16,5 +16,9 @@ class Bob
 
   def silence?(text)
     text.gsub(' ','').empty?
+  end
+
+  def question?(text)
+    text[-1] == '?'
   end
 end
