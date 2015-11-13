@@ -9,7 +9,7 @@ class FoodChain
     dog: "What a hog, to swallow a dog!",
     goat: "Just opened her throat and swallowed a goat!",
     cow: "I don't know how she swallowed a cow!",
-    horse: "She's dead, of course!"
+    horse: "She's dead, of course!\n"
   }
 
   def self.song
@@ -24,8 +24,13 @@ class FoodChain
       break if FOOD.length - 1 == swallowed.length
 
       swallowed.each do |eaten|
-        catch_phrase = "She swallowed the #{last_eaten} to catch the #{eaten}."
-        catch_phrase = "#{catch_phrase[0...-1]} that #{FOOD[eaten][3..-1]}" if eaten == swallowed[-2]
+        catch_phrase = "She swallowed the #{last_eaten} to catch the #{eaten}"
+
+        if eaten == swallowed[-2]
+          catch_phrase += " that #{FOOD[eaten][3..-2]}"
+        end
+
+        catch_phrase += "."
 
         aggregate << catch_phrase
         last_eaten = eaten
@@ -35,6 +40,6 @@ class FoodChain
       aggregate << "#{FOOD[last_eaten]}\n"
     end
 
-    aggregate.join("\n") + "\n"
+    aggregate.join("\n")
   end
 end
