@@ -10,13 +10,15 @@ class Sieve
   end
 
   def primes
-    2.upto(limit).each do |n|
-      numbers.each do |number|
-        next if marked.include?(number)
-        marked << number if number != n && number % n == 0
+    @primes ||= begin
+      2.upto(limit).each do |n|
+        numbers.each do |number|
+          next if marked.include?(number)
+          marked << number if number != n && number % n == 0
+        end
       end
-    end
 
-    numbers - marked
+      numbers - marked
+    end
   end
 end
