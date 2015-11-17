@@ -9,8 +9,7 @@ class Binary
   end
 
   def to_decimal
-    binary.chars.reverse.each_with_index.reduce(0) do |sum, a |
-      value, index = a[0], a[1]
+    binary.chars.reverse.each_with_index.reduce(0) do |sum, (value, index)|
       sum + (value.to_i * (2 ** index))
     end
   end
