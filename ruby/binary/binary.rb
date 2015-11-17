@@ -4,8 +4,8 @@ class Binary
   VERSION = 1
 
   def initialize(binary)
+    raise ArgumentError unless binary.match(/^[01]+$/)
     @binary = binary
-    raise ArgumentError unless binary.gsub('0', '').gsub('1', '').empty?
   end
 
   def to_decimal
