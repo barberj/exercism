@@ -1,15 +1,13 @@
 -module(phone).
 -export([number/1, areacode/1, pretty_print/1]).
 
-number([H|T], Cleaned) when H >= $0, H =< $9  -> number(T, Cleaned ++ [H]);
-number([_|T], Cleaned)                        -> number(T, Cleaned);
-number([], Cleaned)                           ->
-  if
-    length(Cleaned) == 10                    -> Cleaned;
-    length(Cleaned) == 11, hd(Cleaned) == $1 -> tl(Cleaned);
-    true                                     -> "0000000000"
-  end.
-number(Number)                                -> number(Number, []).
+validate(Number) when length(Number) == 10      -> Number;
+validate([$1|Number]) when length(Number) == 10 -> Number;
+validate(_) -> lists:duplicate(10, $0).
+
+number(Number) ->
+  IsDigit = fun (Digit) -> Digit >= $0 andalso Digit =< $9 end,
+  validate(lists:filter(IsDigit, Number)).
 
 number_parts(Number) ->
   Cleaned = number(Number),
