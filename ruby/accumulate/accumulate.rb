@@ -1,5 +1,7 @@
 module Enumerable
   def accumulate
-    map { |a| yield(a) }
+    [].tap do |accumulated|
+      each { |a| accumulated << yield(a) }
+    end
   end
 end
