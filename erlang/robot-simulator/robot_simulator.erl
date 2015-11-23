@@ -1,5 +1,5 @@
 -module(robot_simulator).
--export([create/0, direction/1, position/1, place/3, simulate_robot/1, left/1, right/1, advance/1]).
+-export([create/0, direction/1, position/1, place/3, simulate_robot/1, left/1, right/1, advance/1, control/2]).
 
 -record(robot, {direction=undefined, position={undefined, undefined}}).
 
@@ -41,6 +41,17 @@ advance(Robot) ->
   receive
     {Robot, Direction} -> Direction
   end.
+
+control(Robot, [$A| Tail]) ->
+  advance(Robot),
+  control(Robot, Tail);
+control(Robot, [$L| Tail]) ->
+  left(Robot),
+  control(Robot, Tail);
+control(Robot, [$R| Tail]) ->
+  right(Robot),
+  control(Robot, Tail);
+control(Robot, _) -> Robot.
 
 turn(north, left) -> west;
 turn(north, right) -> east;
