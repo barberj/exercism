@@ -10,7 +10,6 @@ get(Grade, School) ->
   end.
 
 add(Name, Grade, School) ->
-  Students = get(Grade, School),
-  orddict:store(Grade, [Name| Students], School).
+  orddict:append(Grade, Name, School).
 
-sort(School) -> School.
+sort(School) -> [{Grade, lists:sort(Students)} || {Grade, Students} <- School].
