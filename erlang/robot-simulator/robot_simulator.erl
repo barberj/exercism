@@ -1,5 +1,5 @@
 -module(robot_simulator).
--export([create/0, direction/1, position/1, place/3, simulate_robot/1]).
+-export([create/0, direction/1, position/1, place/3, simulate_robot/1, left/1, right/1]).
 %-export([create/0,direction/1,position/1,place/3,left/1,right/1,control/2]).
 
 -record(robot, {direction=undefined, position={undefined, undefined}}).
@@ -25,6 +25,27 @@ place(Robot, Direction, Position) ->
     {Robot, ok} -> ok
   end.
 
+left(Robot) ->
+  Robot ! {self(), {left}},
+  receive
+    {Robot, ok} -> ok
+  end.
+
+right(Robot) ->
+  Robot ! {self(), {right}},
+  receive
+    {Robot, ok} -> ok
+  end.
+
+turn(north, left) -> west;
+turn(north, right) -> east;
+turn(west, right) -> north;
+turn(west, left) -> south;
+turn(east, left) -> north;
+turn(east, right) -> south;
+turn(south, left) -> east;
+turn(south, right) -> west.
+
 simulate_robot(Robot) ->
   receive
     {From, {hi}} ->
@@ -38,5 +59,13 @@ simulate_robot(Robot) ->
       simulate_robot(Robot);
     {From, {position}} ->
       From ! {self(), Robot#robot.position},
-      simulate_robot(Robot)
+      simulate_robot(Robot);
+    {From, {left}} ->
+      NewRobot = Robot#robot{direction=turn(Robot#robot.direction,left), position=Robot#robot.position},
+      From ! {self(), ok},
+      simulate_robot(NewRobot);
+    {From, {right}} ->
+      NewRobot = Robot#robot{direction=turn(Robot#robot.direction,right), position=Robot#robot.position},
+      From ! {self(), ok},
+      simulate_robot(NewRobot)
   end.
