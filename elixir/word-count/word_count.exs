@@ -18,9 +18,9 @@ defmodule Words do
   end
 
   defp tokenize(sentence) do
-    cleaned = Regex.replace(~r/[^A-Za-z0-9]+/, sentence, " ")
+    cleaned = Regex.replace(~r/[^A-Za-z0-9\-]+/, sentence, " ")
     stripped = String.strip(cleaned)
     normed = String.downcase(stripped)
-    Regex.split(~r/[^a-z0-9]+/, normed)
+    Regex.split(~r/[^a-z0-9-]+/, normed)
   end
 end
