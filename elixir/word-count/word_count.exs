@@ -6,10 +6,15 @@ defmodule Words do
   """
   @spec count(String.t) :: map()
   def count(sentence) do
-    map = %{}
-    Enum.each(tokenize(sentence), fn word -> value = map[word]; Dict.put(map, word, value || 0 + 1) end)
+    count(tokenize(sentence), %{})
+  end
 
+  defp count([], map) do
     map
+  end
+
+  defp count([token|tokens], map) do
+    count(tokens, Dict.put(map, token, (map[token] || 0) + 1))
   end
 
   defp tokenize(sentence) do
