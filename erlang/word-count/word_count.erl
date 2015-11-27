@@ -6,8 +6,8 @@ count([], Map) ->
 count([W|T], Map) ->
   count(T, maps:put(W, maps:get(W, Map, 0) + 1, Map)).
 count(String) ->
-  Cleaned = re:replace(String,"[^A-Za-z0-9]+", " ", [{return, list}]),
+  Cleaned = re:replace(String,"[^A-Za-z0-9]+", " ", [global, {return, list}]),
   Stripped = string:strip(Cleaned),
   Normed = string:to_lower(Stripped),
-  Tokens = re:split(Normed, "[^a-z0-9]+", [trim,{return, list}]),
+  Tokens = re:split(Normed, "\s", [trim,{return, list}]),
   count(Tokens, #{}).
