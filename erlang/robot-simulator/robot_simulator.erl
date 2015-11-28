@@ -69,8 +69,6 @@ move(south, {X, Y}) -> {X, Y - 1}.
 
 simulate_robot(Robot) ->
   receive
-    {From, {hi}} ->
-      From ! {self(), yello};
     {From, {Direction, Position}} ->
       NewRobot = #robot{direction=Direction, position=Position},
       From ! {self(), ok},
