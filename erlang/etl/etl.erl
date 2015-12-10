@@ -1,13 +1,9 @@
 -module(etl).
 -export([transform/1]).
 
-map_letters(_, [], Acc)                -> Acc;
-map_letters(Score, [Letter|Tail], Acc) ->
-  map_letters(Score, Tail, Acc ++ [{string:to_lower(Letter), Score}]).
+transform({Score, Letters}, Acc) ->
+  Mapper = fun(Letter, Map) -> [{string:to_lower(Letter), Score} | Map] end,
+  lists:foldl(Mapper, Acc, Letters).
 
-transform([], Acc)                     -> Acc;
-transform([{Score,Letters}|Tail], Acc) ->
-  LetterMap = map_letters(Score, Letters, []),
-  transform(Tail, Acc ++ LetterMap).
-
-transform(ScrabbleData) -> transform(ScrabbleData, []).
+transform(ScrabbleData) when is_list(ScrabbleData) ->
+  lists:foldl(fun transform/2, [], ScrabbleData).
