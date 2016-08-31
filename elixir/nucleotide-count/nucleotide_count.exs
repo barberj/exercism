@@ -1,5 +1,6 @@
 defmodule NucleotideCount do
   @nucleotides [?A, ?C, ?G, ?T]
+  @histogram_map %{?A => 0, ?T => 0, ?C => 0, ?G => 0}
 
   @doc """
   Counts individual nucleotides in a NucleotideCount strand.
@@ -14,9 +15,28 @@ defmodule NucleotideCount do
   """
   @spec count([char], char) :: non_neg_integer
   def count(strand, nucleotide) do
-
+    case valid?([nucleotide|strand]) do
+      false -> raise ArgumentError
+      true -> count(strand, nucleotide, 0)
+    end
   end
 
+  defp valid?(nucleotides) do
+    Enum.all?(nucleotides, fn(nucleotide) -> Enum.member?(@nucleotides, nucleotide) end)
+  end
+
+  defp count([], _, count) do
+    count
+  end
+
+  defp count([strand_nucleotide | strand], nucleotide, count) do
+    count = cond do
+      strand_nucleotide == nucleotide -> count + 1
+      true                            -> count
+    end
+
+    count(strand, nucleotide, count)
+  end
 
   @doc """
   Returns a summary of counts by nucleotide.
@@ -28,6 +48,10 @@ defmodule NucleotideCount do
   """
   @spec histogram([char]) :: map
   def histogram(strand) do
+    histogram(strand, @histogram_map)
+  end
 
+  defp histogram(strand, map) do
+    map
   end
 end
