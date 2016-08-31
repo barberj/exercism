@@ -22,7 +22,11 @@ defmodule NucleotideCount do
   end
 
   defp valid?(nucleotides) do
-    Enum.all?(nucleotides, fn(nucleotide) -> Enum.member?(@nucleotides, nucleotide) end)
+    Enum.all?(nucleotides, &(valid_nucleotide?(&1)))
+  end
+
+  defp valid_nucleotide?(nucleotide) do
+    Enum.member?(@nucleotides, nucleotide)
   end
 
   defp count([], _, count) do
