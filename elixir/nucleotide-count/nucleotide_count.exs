@@ -52,6 +52,11 @@ defmodule NucleotideCount do
   end
 
   defp histogram(strand, map) do
-    map
+    Enum.reduce(strand, map, fn(nucleotide, map) -> histogram(strand, nucleotide, map) end)
+  end
+
+  defp histogram(strand, nucleotide, map) do
+    count = count(strand, nucleotide)
+    %{ map | nucleotide => count }
   end
 end
