@@ -1,4 +1,6 @@
 defmodule NucleotideCount do
+  @type nucleotide :: ?A | ?C | ?G | ?T
+
   @nucleotides [?A, ?C, ?G, ?T]
   @histogram_map %{?A => 0, ?T => 0, ?C => 0, ?G => 0}
 
@@ -13,7 +15,7 @@ defmodule NucleotideCount do
   iex> NucleotideCount.count('AATAA', ?T)
   1
   """
-  @spec count([char], char) :: non_neg_integer
+  @spec count([char], nucleotide) :: non_neg_integer
   def count(strand, nucleotide) do
     case valid?([nucleotide|strand]) do
       false -> raise ArgumentError
