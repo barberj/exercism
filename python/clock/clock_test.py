@@ -90,6 +90,9 @@ class ClockTest(unittest.TestCase):
     def test_subtract_minutes(self):
         self.assertEqual('10:00', str(Clock(10, 3).add(-3)))
 
+    def test_subtract_to_top_of_previous_hour(self):
+        self.assertEqual('09:00', str(Clock(10, 3).add(-63)))
+
     def test_subtract_to_previous_hour(self):
         self.assertEqual('10:00', str(Clock(10, 3).add(-3)))
 

@@ -18,23 +18,13 @@ class Clock(object):
         self.minutes = minutes % 60
 
     def add(self, minutes):
-        print("I am %s and adding %d" % (self, minutes))
-
         new_minutes = self.minutes + minutes
-        delta_hours = new_minutes / 60
-        multiplier = 0 if not new_minutes else 1
-        print("delta_hours=%d new_minutes=%d minutes=%d" % (
-            delta_hours, new_minutes, minutes
-        ))
-        hours = self.hour + (delta_hours * multiplier)
-        print("I am setting %d hours" % hours)
-        minutes = new_minutes % 60
-        print("I am setting %d minutes" % minutes)
+        delta_hours = new_minutes / 60 if new_minutes else 0
 
-        self.__set_hour__(hours)
-        self.__set_minutes__(minutes)
+        new_hour = self.hour + delta_hours
 
-        print("I am now %s" % self)
+        self.__set_hour__(new_hour)
+        self.__set_minutes__(new_minutes)
 
         return self
 
