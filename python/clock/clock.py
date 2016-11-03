@@ -1,7 +1,12 @@
 class Clock(object):
     def __init__(self, hour, minutes):
-        self.__set_hour__(hour)
-        self.__set_minutes__(minutes)
+        self.__set_hour__(0)
+        self.__set_minutes__(0)
+
+        self.add(minutes).add(hour * 60)
+
+    def __eq__(self, other):
+        return self.hour == other.hour and self.minutes == other.minutes
 
     def __str__(self):
         return "%02d:%02d" % (self.hour, self.minutes)
@@ -13,20 +18,27 @@ class Clock(object):
         self.minutes = minutes % 60
 
     def add(self, minutes):
-        if minutes > 0:
-            total_minutes = self.minutes + minutes
-            self.__set_hour__(self.hour + (total_minutes / 60))
-            self.__set_minutes__(total_minutes)
-        #elif minutes < 0:
-        #    self.subtract(minutes * -1)
+        print("I am %s and adding %d" % (self, minutes))
+
+        delta_hours = minutes / 60
+        new_minutes = self.minutes + minutes
+        multiplier = 0 if not new_minutes else 1
+        print("delta_hours=%d new_minutes=%d minutes=%d" % (
+            delta_hours, new_minutes, minutes
+        ))
+        hours = self.hour + (delta_hours * multiplier)
+        print("I am setting %d hours" % hours)
+        minutes = new_minutes % 60
+        print("I am setting %d minutes" % minutes)
+
+        self.__set_hour__(hours)
+        self.__set_minutes__(minutes)
+
+        print("I am now %s" % self)
 
         return self
 
     def subtract(self, minutes):
-        #if minutes > 0:
-        #    self.__set_hour__(self.hour - (minutes / 60))
-        #    self.__set_minutes__(self.minutes - (minutes % 60))
-        #elif minutes < 0:
-        #    self.add(minutes * -1)
+        self.add(minutes * -1)
 
         return self
