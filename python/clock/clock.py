@@ -20,8 +20,8 @@ class Clock(object):
     def add(self, minutes):
         print("I am %s and adding %d" % (self, minutes))
 
-        delta_hours = minutes / 60
         new_minutes = self.minutes + minutes
+        delta_hours = new_minutes / 60
         multiplier = 0 if not new_minutes else 1
         print("delta_hours=%d new_minutes=%d minutes=%d" % (
             delta_hours, new_minutes, minutes
