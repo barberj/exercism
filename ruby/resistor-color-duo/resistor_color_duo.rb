@@ -15,7 +15,7 @@ class ResistorColorDuo
   COLORS = COLOR_MAP.keys.freeze
 
   def self.value(colors)
-    colors.reduce("") do |value, color|
+    colors.shift(2).reduce("") do |value, color|
       "#{value}#{COLOR_MAP[color.downcase]}"
     end.to_i
   end
