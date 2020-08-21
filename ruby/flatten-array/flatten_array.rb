@@ -11,12 +11,8 @@ class FlattenArray
     out = []
     input.each do |v|
       next if v.nil?
-      if v.instance_of?(Array)
-        v = flatten(v)
-        out.concat(v)
-      else
-        out << v
-      end
+      v = v.instance_of?(Array) ?  flatten(v) : [v]
+      out.concat(v)
     end
     out
   end
