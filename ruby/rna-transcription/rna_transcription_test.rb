@@ -1,9 +1,12 @@
-#!/usr/bin/env ruby
-gem 'minitest', '>= 5.0.0'
 require 'minitest/autorun'
 require_relative 'rna_transcription'
 
-class ComplementTest < Minitest::Test
+# Common test data version: 1.3.0 294c831
+class RnaTranscriptionTest < Minitest::Test
+  def test_empty_rna_sequence
+    assert_equal '', Complement.of_dna('')
+  end
+
   def test_rna_complement_of_cytosine_is_guanine
     assert_equal 'G', Complement.of_dna('C')
   end
@@ -22,61 +25,5 @@ class ComplementTest < Minitest::Test
 
   def test_rna_complement
     assert_equal 'UGCACCAGAAUU', Complement.of_dna('ACGTGGTCTTAA')
-  end
-
-  def test_dna_complement_of_cytosine_is_guanine
-    assert_equal 'G', Complement.of_rna('C')
-  end
-
-  def test_dna_complement_of_guanine_is_cytosine
-    assert_equal 'C', Complement.of_rna('G')
-  end
-
-  def test_dna_complement_of_uracil_is_adenine
-    assert_equal 'A', Complement.of_rna('U')
-  end
-
-  def test_dna_complement_of_adenine_is_thymine
-    assert_equal 'T', Complement.of_rna('A')
-  end
-
-  def test_dna_complement
-    assert_equal 'ACTTGGGCTGTAC', Complement.of_rna('UGAACCCGACAUG')
-  end
-
-  def test_dna_raises_argument_error
-    assert_raises(ArgumentError) { Complement.of_dna('U') }
-  end
-
-  def test_rna_raises_argument_error
-    assert_raises(ArgumentError) { Complement.of_rna('T') }
-  end
-
-  def test_rna_raises_argument_error_on_completely_invalid_input
-    assert_raises(ArgumentError) { Complement.of_rna('XXX') }
-  end
-
-  def test_dna_raises_argument_error_on_completely_invalid_input
-    assert_raises(ArgumentError) { Complement.of_dna('XXX') }
-  end
-
-  def test_dna_raises_argument_error_on_partially_invalid_input
-    assert_raises(ArgumentError) { Complement.of_dna('ACGTXXXCTTAA') }
-  end
-
-  def test_rna_raises_argument_error_on_partially_invalid_input
-    assert_raises(ArgumentError) { Complement.of_rna('UGAAXXXGACAUG') }
-  end
-
-  # Problems in exercism evolve over time,
-  # as we find better ways to ask questions.
-  # The version number refers to the version of the problem you solved,
-  # not your solution.
-  #
-  # Define a constant named VERSION inside of Complement.
-  # If you're curious, read more about constants on RubyDoc:
-  # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
-  def test_bookkeeping
-    assert_equal 2, Complement::VERSION
   end
 end

@@ -1,6 +1,4 @@
 class Complement
-  VERSION = 2
-
   DNA_RNA_MAP = {
     'G' => 'C',
     'C' => 'G',
