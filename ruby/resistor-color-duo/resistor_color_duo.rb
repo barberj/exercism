@@ -1,22 +1,20 @@
 class ResistorColorDuo
-  COLOR_MAP = {
-    "black" => 0,
-    "brown" => 1,
-    "red" => 2,
-    "orange" => 3,
-    "yellow" => 4,
-    "green" => 5,
-    "blue" => 6,
-    "violet" => 7,
-    "grey" => 8,
-    "white" => 9
-  }.freeze
-
-  COLORS = COLOR_MAP.keys.freeze
+  COLORS = [
+    "black",
+    "brown",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "violet",
+    "grey",
+    "white"
+  ].freeze
 
   def self.value(colors)
-    colors.shift(2).reduce("") do |value, color|
-      "#{value}#{COLOR_MAP[color.downcase]}"
-    end.to_i
+    colors.first(2).
+      map { |color| COLORS.index(color) }.
+      join().to_i
   end
 end
