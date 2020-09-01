@@ -1,7 +1,5 @@
 class Acronym
   def self.abbreviate(phrase)
-    phrase.split("-").map do |p|
-      p.split(" ").map { |p| p.chr.upcase }
-    end.join
+    phrase.scan(/\w+/).map { |p| p.chr.upcase }.join
   end
 end
